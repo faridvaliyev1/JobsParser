@@ -1,11 +1,15 @@
-﻿
-using JobsParser.Models;
+﻿using JobsParser.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobsParser
 {
     public class ApplicationDbContext:DbContext
     {
+
+       public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+
+        }
        public DbSet<Job> Jobs { get; set; }
 
        public DbSet<Site> Sites { get; set; }
@@ -16,6 +20,8 @@ namespace JobsParser
                 .HasMany(j => j.Jobs)
                 .WithOne(s => s.Site)
                 .IsRequired();
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
